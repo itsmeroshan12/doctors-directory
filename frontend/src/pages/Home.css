@@ -1,0 +1,145 @@
+/* ===== Hero Section ===== */
+.home-hero h1 {
+  font-weight: 700;
+  font-size: 2.2rem;
+  color: #007bff;
+}
+.home-hero p {
+  font-size: 1.2rem;
+  color: #444;
+}
+
+/* ===== Icon Circle Styling ===== */
+.icon-circle {
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, #c8e6ff, #e1f5fe);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 3px 6px rgba(0, 123, 255, 0.3);
+  transition: background 0.3s ease;
+}
+.card-hover:hover .icon-circle {
+  background: linear-gradient(135deg, #90caf9, #64b5f6);
+}
+
+/* ===== Card Hover Effects ===== */
+.card-hover {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background-color: #fdfdff;
+  border: 1px solid #dee2e6;
+  border-radius: 12px;
+}
+.card-hover:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
+}
+
+/* ===== Card Title & Body ===== */
+.card-title {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+.card-body {
+  text-align: center;
+}
+
+/* ===== Latest Listings ===== */
+.listing-card .card-title {
+  color: #007bff;
+}
+.listing-card .card-text {
+  font-size: 0.85rem;
+  color: #6c757d;
+}
+.listing-card .btn {
+  font-size: 0.8rem;
+}
+
+/* ===== Responsive Tweaks ===== */
+@media (max-width: 576px) {
+  .card-body {
+    padding: 1rem !important;
+  }
+  .icon-circle {
+    width: 45px;
+    height: 45px;
+  }
+}
+
+
+
+.offer-section {
+  background: linear-gradient(-90deg, #007bff 0%, #00c6ff 100%); /* Gradient Blue */
+  min-height: 70vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.info-box {
+  width: 230px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.info-box:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+ .typing-text {
+    font-size: 1.5rem;
+    color: #555;
+    min-height: 1.5rem;
+    color: #39a752;
+    font-weight: 600;
+  }
+
+
+
+
+  .premium-section {
+  background: linear-gradient(135deg, #007bff 0%, #00c6ff 100%);
+  color: white;
+  border-radius: 0 0 60px 60px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+/* Typing text color */
+ .premium-section .typing-text {
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: #e0ffe0;
+}
+
+/* Icon circle with subtle border */
+ .premium-section .icon-circle {
+  width: 60px;
+  height: 60px;
+  background-color: #e3f2fd;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #fff;
+  transition: transform 0.3s ease;
+}
+
+ .premium-section .card-hover:hover .icon-circle {
+  transform: scale(1.1);
+}
+
+/* Card hover */
+ .premium-section .card-hover {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+ .premium-section .card-hover:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+}
+
+
+

@@ -1,0 +1,182 @@
+/* ========== Navbar Brand ========== */
+.navbar-brand {
+  font-size: 1.7rem;
+  font-weight: bold;
+  color: #003566 !important;
+  letter-spacing: 0.5px;
+  transition: color 0.3s ease;
+}
+
+.navbar-brand:hover {
+  color: #0d6efd !important;
+}
+
+/* ========== Nav Links ========== */
+.nav-link {
+  font-weight: 500;
+  color: #1c3349 !important;
+  transition: all 0.3s ease;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+}
+
+.nav-link:hover,
+.dropdown-item:hover {
+  color: #0d6efd !important;
+  background-color: rgba(13, 110, 253, 0.1);
+  border-radius: 8px;
+}
+
+/* Active or Focused Nav Item */
+.nav-link.active {
+  background-color: rgba(13, 110, 253, 0.15);
+  color: #0d6efd !important;
+}
+
+/* ========== Dropdown Styling ========== */
+.dropdown-menu {
+  border-radius: 12px;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+  border: none;
+  padding: 0.5rem 0;
+  animation: fadeIn 0.3s ease-in-out;
+  backdrop-filter: blur(8px);
+  background: rgba(255, 255, 255, 0.95);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.dropdown-header {
+  font-size: 0.95rem;
+  padding: 0.75rem 1.25rem;
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #eee;
+}
+
+.dropdown-item {
+  padding: 0.5rem 1.25rem;
+  transition: all 0.25s ease;
+}
+
+/* ========== Custom Close Button for Mobile ========== */
+.btn-close {
+  margin-left: auto;
+  margin-right: 10px;
+  background: url('https://img.icons8.com/ios/452/delete-forever.png') no-repeat center;
+  background-size: 25px;
+  border: none;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  padding: 0;
+  border-radius: 50%;
+  background-color: #dee2e6;
+  transition: background-color 0.3s ease;
+}
+
+.btn-close:hover {
+  background-color: #ffc9c9;
+}
+
+/* ========== User Greeting Text ========== */
+.user-firstname {
+  font-size: 18px;
+  font-weight: 600;
+  display: block;
+  margin-top: 4px;
+  color: #003566;
+}
+
+/* ========== Mobile Slide-in Navbar ========== */
+@media (max-width: 991px) {
+  .mobile-slide {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 280px;
+    background: #ffffff;
+    z-index: 1051;
+    box-shadow: -4px 0 20px rgba(0, 0, 0, 0.1);
+    transition: transform 0.35s ease-in-out;
+    transform: translateX(100%);
+    padding: 20px;
+    border-top-left-radius: 16px;
+    border-bottom-left-radius: 16px;
+  }
+
+  .mobile-slide.show {
+    transform: translateX(0);
+  }
+
+  .mobile-backdrop {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1050;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(2px);
+  }
+
+  body.nav-open .mobile-backdrop {
+    display: block;
+  }
+
+  body.nav-open {
+    overflow: hidden;
+  }
+}
+
+/* ========== Extra Navbar Styling ========== */
+.navbar {
+  background: linear-gradient(90deg, #f5faff, #e9f5ff);
+  border-bottom: 1px solid #dfeeff;
+  box-shadow: 0 4px 12px rgba(0, 119, 182, 0.08);
+  transition: all 0.3s ease-in-out;
+}
+
+/* ========== Glassmorphic Button for Navbar ========== */
+.navbar .btn-glass {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: #fff;
+  font-weight: 500;
+  border-radius: 10px;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 4px 16px rgba(0, 198, 255, 0.15);
+}
+
+.navbar .btn-glass:hover {
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 12px rgba(0, 198, 255, 0.4);
+  color: #f0f8ff;
+}
+
+
+/* ========== Glowing Outline Danger Button (Logout) ========== */
+.navbar .btn-outline-danger {
+  border: 1.5px solid #ff4d6d;
+  color: #ff4d6d;
+  border-radius: 10px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  background: transparent;
+}
+
+.navbar .btn-outline-danger:hover {
+  background-color: #ff4d6d;
+  color: white;
+  box-shadow: 0 0 10px #ff4d6d, 0 0 20px #ff4d6d55;
+}
+
+
+
+
