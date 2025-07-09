@@ -1,0 +1,28 @@
+# 👉 FRONTEND (React)
+frontend/node_modules/
+frontend/build/
+frontend/.env
+frontend/.env.*.local
+frontend/coverage/
+frontend/public/*.log
+frontend/public/*.zip
+
+# 👉 BACKEND (Node.js)
+backend/node_modules/
+backend/.env
+
+backend/coverage/
+
+# 👉 Common logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# 👉 System files
+.DS_Store
+Thumbs.db
+
+# 👉 Editor folders
+.vscode/
+.idea/
+*.swp
