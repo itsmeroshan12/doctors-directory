@@ -13,6 +13,8 @@ import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+
+const API = process.env.REACT_APP_API_BASE;
 const areas = ["Downtown", "Uptown", "Suburb", "West End", "East Side"];
 const categories = ["Multispeciality", "Cardiology", "Pediatric", "Oncology"];
 
@@ -39,7 +41,7 @@ const HospitalEdit = () => {
   useEffect(() => {
     const fetchHospital = async () => {
       try {
-        const res = await axios.get(`http://localhost:5000/api/hospitals/${id}`);
+        const res = await axios.get(`${API}/api/hospitals/${id}`);
         setFormData((prev) => ({ ...prev, ...res.data }));
       } catch (err) {
         console.error("Error fetching hospital:", err);
@@ -83,7 +85,7 @@ const HospitalEdit = () => {
     }
 
     try {
-      await axios.put(`http://localhost:5000/api/hospitals/${id}`, formPayload, {
+      await axios.put(`${API}/api/hospitals/${id}`, formPayload, {
         headers: { "Content-Type": "multipart/form-data" },
         withCredentials: true,
       });

@@ -5,6 +5,7 @@ import { FaLock, FaEye, FaEyeSlash } from 'react-icons/fa';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+const API = process.env.REACT_APP_API_BASE;
 const ResetPassword = () => {
   const { token } = useParams();
   const navigate = useNavigate();
@@ -31,7 +32,7 @@ const ResetPassword = () => {
 
     setLoading(true);
     try {
-      const res = await axios.post(`http://localhost:5000/api/user/reset-password/${token}`, { password });
+      const res = await axios.post(`${API}/api/user/reset-password/${token}`, { password });
       toast.success(res.data.message || 'Password reset successfully!');
       setTimeout(() => navigate('/user/login'), 2000);
     } catch (err) {

@@ -13,6 +13,7 @@ import {
   Typography,
 } from "@mui/material";
 
+const API = process.env.REACT_APP_API_BASE;
 const areas = [
   "Baner", "Kothrud", "Wakad", "Hinjewadi", "Aundh", "Kharadi", "Hadapsar"
 ];
@@ -64,7 +65,7 @@ const AddHospital = () => {
     }
 
     try {
-      await axios.post("http://localhost:5000/api/hospitals", data, {
+      await axios.post(`${API}/api/hospitals`, data, {
         withCredentials: true,
       });
 

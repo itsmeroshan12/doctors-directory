@@ -25,6 +25,8 @@ import {
 import "react-toastify/dist/ReactToastify.css";
 import "./MyListings.css";
 
+
+const API = process.env.REACT_APP_API_BASE;
 const MyListings = () => {
   const navigate = useNavigate();
   const [listings, setListings] = useState([]);
@@ -49,7 +51,7 @@ const MyListings = () => {
   useEffect(() => {
     const fetchListings = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/user/listings", {
+        const res = await axios.get(`${API}/api/user/listings`, {
           withCredentials: true,
         });
         setListings(res.data);
@@ -75,7 +77,7 @@ const MyListings = () => {
     const { listingType, id } = selectedItem;
 
     try {
-      await axios.delete(`http://localhost:5000/api/${listingType}s/${id}`, {
+      await axios.delete(`${API}/api/${listingType}s/${id}`, {
         withCredentials: true,
       });
 
@@ -216,7 +218,7 @@ const MyListings = () => {
                 <Card className="shadow-sm h-100">
                   <Card.Img
                     variant="top"
-                    src={`http://localhost:5000/uploads/${getImage(item)}`}
+                    src={`${API}/uploads/${getImage(item)}`}
                     style={{ height: "200px", objectFit: "cover" }}
                   />
                   <Card.Body>

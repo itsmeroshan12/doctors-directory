@@ -9,6 +9,8 @@ import slugify from '../utils/slugify';
 import { Button } from 'react-bootstrap';
 import { useNavigate } from "react-router-dom";
 
+
+const API = process.env.REACT_APP_API_BASE;
 const ClinicList = () => {
   const [filters, setFilters] = useState({ name: '', area: '' });
   const [clinics, setClinics] = useState([]);
@@ -23,7 +25,7 @@ const ClinicList = () => {
   const fetchClinics = async () => {
     setLoading(true);
     try {
-      const res = await axios.get('http://localhost:5000/api/clinics', {
+      const res = await axios.get(`${API}/api/clinics`, {
         params: filters,
       });
       const sorted = res.data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
@@ -152,7 +154,7 @@ const ClinicList = () => {
           currentClinics.map((clinic) => (
             <div key={clinic.id} className="clinic-listing mb-4 d-flex w-100 animate-fade-in">
               <img
-                src={`http://localhost:5000/uploads/${clinic.clinicImage}`}
+                src={`${API}/uploads/${clinic.clinicImage}`}
                 alt={clinic.name}
                 className="clinic-img me-3 rounded"
               />

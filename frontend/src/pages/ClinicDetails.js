@@ -12,7 +12,7 @@ import styles from './ClinicDetails.module.css';
 import Navbar from '../components/Navbar';
 import { Autoplay } from 'swiper/modules';
 
-
+const API = process.env.REACT_APP_API_BASE;
 const ClinicDetails = () => {
   const { area, category, slug } = useParams();
   const [clinic, setClinic] = useState(null);
@@ -22,7 +22,7 @@ const ClinicDetails = () => {
   useEffect(() => {
     const fetchClinic = async () => {
       try {
-        const res = await axios.get(`http://localhost:5000/api/clinics/${area}/${category}/${slug}`);
+        const res = await axios.get(`${API}/api/clinics/${area}/${category}/${slug}`);
         setClinic(res.data);
       } catch (err) {
         console.error('Error fetching clinic details:', err);
@@ -92,7 +92,7 @@ const ClinicDetails = () => {
                   {clinic.clinicImage && (
                     <SwiperSlide>
                       <img
-                        src={`http://localhost:5000/uploads/${clinic.clinicImage}`}
+                        src={`${API}/uploads/${clinic.clinicImage}`}
                         alt="Clinic"
                         className={styles.swiperImage}
                       />
@@ -101,7 +101,7 @@ const ClinicDetails = () => {
                   {clinic.doctorImage && (
                     <SwiperSlide>
                       <img
-                        src={`http://localhost:5000/uploads/${clinic.doctorImage}`}
+                        src={`${API}/uploads/${clinic.doctorImage}`}
                         alt="Doctor"
                         className={styles.swiperImage}
                       />
@@ -110,7 +110,7 @@ const ClinicDetails = () => {
                   {clinic.otherImage && (
                     <SwiperSlide>
                       <img
-                        src={`http://localhost:5000/uploads/${clinic.otherImage}`}
+                        src={`${API}/uploads/${clinic.otherImage}`}
                         alt="Other"
                         className={styles.swiperImage}
                       />
@@ -125,7 +125,7 @@ const ClinicDetails = () => {
                 <div className="d-flex align-items-center mb-3">
                   {clinic.doctorImage ? (
                     <img
-                      src={`http://localhost:5000/uploads/${clinic.doctorImage}`}
+                      src={`${API}/uploads/${clinic.doctorImage}`}
                       alt="Doctor"
                       className={`me-3 ${styles.profileImage}`}
                     />

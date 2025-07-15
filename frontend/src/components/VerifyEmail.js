@@ -4,6 +4,7 @@ import axios from 'axios';
 import { Spinner } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+const API = process.env.REACT_APP_API_BASE;
 const VerifyEmail = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
@@ -22,7 +23,7 @@ const VerifyEmail = () => {
 
     const verifyEmail = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/api/user/verify-email?token=${token}`);
+        const response = await axios.get(`${API}/api/user/verify-email?token=${token}`);
         const msg = response.data.message || 'Email verified successfully!';
         setMessage(msg);
 

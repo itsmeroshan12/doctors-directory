@@ -14,6 +14,9 @@ import {
   Typography,
 } from "@mui/material";
 
+
+
+const API = process.env.REACT_APP_API_BASE;
 const categories = [
   "General-Physician",
   "Cardiology",
@@ -85,7 +88,7 @@ const AddDoctor = () => {
     }
 
     try {
-      const res = await axios.post("http://localhost:5000/api/doctors", data, {
+      const res = await axios.post(`${API}/api/doctors`, data, {
         withCredentials: true,
       });
       toast.success("Doctor added successfully");

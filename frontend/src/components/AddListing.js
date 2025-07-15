@@ -12,6 +12,7 @@ import {
   MenuItem,
 } from "@mui/material";
 
+const API = process.env.REACT_APP_API_BASE;
 const categories = [
   "General-Physician",
   "Orthopedic",
@@ -76,7 +77,7 @@ const AddListing = () => {
     }
 
     try {
-      const res = await axios.post("http://localhost:5000/api/clinics", data, {
+      const res = await axios.post(`${API}/api/clinics`, data, {
         withCredentials: true, // ✅ Send cookie for user_id extraction
       });
       toast.success("Listing added successfully");

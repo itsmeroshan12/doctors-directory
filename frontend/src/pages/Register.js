@@ -5,6 +5,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
 
+
+const API = process.env.REACT_APP_API_BASE;
 const Register = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -52,7 +54,7 @@ const Register = () => {
         password: formData.password,
       };
 
-      const response = await axios.post('http://localhost:5000/api/user/register', payload);
+      const response = await axios.post(`${API}/api/user/register`, payload);
       setLoading(false);
       toast.success(response.data.message || 'Successfully registered!');
       

@@ -16,6 +16,7 @@ import styles from './ClinicDetails.module.css';
 import Navbar from '../components/Navbar';
 import { Autoplay } from 'swiper/modules';
 
+const API = process.env.REACT_APP_API_BASE;
 const HospitalDetails = () => {
   const { area, category, slug } = useParams();
   const [hospital, setHospital] = useState(null);
@@ -24,7 +25,7 @@ const HospitalDetails = () => {
   useEffect(() => {
     const fetchHospital = async () => {
       try {
-        const res = await axios.get(`http://localhost:5000/api/hospitals/${area}/${category}/${slug}`);
+        const res = await axios.get(`${API}/api/hospitals/${area}/${category}/${slug}`);
         setHospital(res.data);
       } catch (err) {
         console.error('Error fetching hospital details:', err);
@@ -92,7 +93,7 @@ const HospitalDetails = () => {
                   {hospital.hospitalImage && (
                     <SwiperSlide>
                       <img
-                        src={`http://localhost:5000/uploads/${hospital.hospitalImage}`}
+                        src={`${API}/uploads/${hospital.hospitalImage}`}
                         alt="Hospital"
                         className={styles.swiperImage}
                       />
@@ -101,7 +102,7 @@ const HospitalDetails = () => {
                   {hospital.otherImage && (
                     <SwiperSlide>
                       <img
-                        src={`http://localhost:5000/uploads/${hospital.otherImage}`}
+                        src={`${API}/uploads/${hospital.otherImage}`}
                         alt="Other"
                         className={styles.swiperImage}
                       />
@@ -115,7 +116,7 @@ const HospitalDetails = () => {
                 <div className="d-flex align-items-center mb-3">
                   {hospital.hospitalImage ? (
                     <img
-                      src={`http://localhost:5000/uploads/${hospital.hospitalImage}`}
+                      src={`${API}/uploads/${hospital.hospitalImage}`}
                       alt="Hospital"
                       className={`me-2 ${styles.profileImage}`}
                     />

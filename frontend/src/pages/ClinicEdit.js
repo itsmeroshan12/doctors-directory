@@ -12,6 +12,7 @@ import {
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+const API = process.env.REACT_APP_API_BASE;
 const categories = [
   "General",
   "Orthopedic",
@@ -62,7 +63,7 @@ const ClinicEdit = () => {
   useEffect(() => {
     const fetchClinic = async () => {
       try {
-        const res = await axios.get(`http://localhost:5000/api/clinics/${id}`);
+        const res = await axios.get(`${API}/api/clinics/${id}`);
         setFormData((prev) => ({ ...prev, ...res.data }));
       } catch (err) {
         toast.error("Failed to load clinic");
@@ -101,7 +102,7 @@ const ClinicEdit = () => {
     }
 
     try {
-      await axios.put(`http://localhost:5000/api/clinics/${id}`, data, {
+      await axios.put(`${API}/api/clinics/${id}`, data, {
         withCredentials: true,
         headers: { "Content-Type": "multipart/form-data" },
       });

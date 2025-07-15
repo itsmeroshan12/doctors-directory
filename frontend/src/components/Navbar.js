@@ -7,6 +7,7 @@ import './Navbar.css';
 import Collapse from 'bootstrap/js/dist/collapse';
 import axios from 'axios';
 
+const API = process.env.REACT_APP_API_BASE;
 const Navbar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('token'));
   const [firstName, setFirstName] = useState(localStorage.getItem('firstName') || 'User');
@@ -25,7 +26,7 @@ const Navbar = () => {
  const handleLogout = async () => {
   try {
     // Call logout API
-    await axios.post("http://localhost:5000/api/auth/logout", {}, { withCredentials: true });
+    await axios.post(`${API}/api/auth/logout`, {}, { withCredentials: true });
 
     // Clear auth data
     localStorage.removeItem("token");

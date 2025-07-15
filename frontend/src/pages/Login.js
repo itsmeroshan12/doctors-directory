@@ -4,6 +4,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+const API = process.env.REACT_APP_API_BASE;
 const Login = () => {
   const navigate = useNavigate();
 
@@ -34,7 +35,7 @@ const Login = () => {
 
     try {
       const res = await axios.post(
-        'http://localhost:5000/api/auth/login',
+        `${API}/api/auth/login`,
         { email, password },
         { withCredentials: true }
       );
