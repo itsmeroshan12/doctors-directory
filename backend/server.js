@@ -17,7 +17,7 @@ const app = express();
 
 // ✅ Middleware
 app.use(cors({
-  origin: 'http://localhost:3000',
+  origin: 'http://13.232.11.181:3000',
   credentials: true,
 }));
 app.use(express.json());
