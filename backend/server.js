@@ -35,6 +35,13 @@ app.use('/api/search', searchRoutes);
 // ✅ Serve uploaded images
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
+// ✅ Serve React frontend (production build)
+app.use(express.static(path.join(__dirname, '../frontend/build')));
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/build/index.html'));
+});
+
 // ✅ Start server
 async function startServer() {
   try {
