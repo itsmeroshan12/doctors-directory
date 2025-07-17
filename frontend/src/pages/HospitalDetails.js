@@ -25,7 +25,7 @@ const HospitalDetails = () => {
   useEffect(() => {
     const fetchHospital = async () => {
       try {
-        const res = await axios.get(`${API}/api/hospitals/${area}/${category}/${slug}`);
+        const res = await axios.get(`${API}/api/hospitals/${area}/${slug}`);
         setHospital(res.data);
       } catch (err) {
         console.error('Error fetching hospital details:', err);

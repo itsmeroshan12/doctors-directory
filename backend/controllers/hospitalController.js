@@ -77,24 +77,22 @@ exports.createHospital = async (req, res) => {
 
 // ✅ Get hospital by slug, area, and category
 exports.getHospitalBySlug = async (req, res) => {
-  const { slug = '', area = '', category = '' } = req.params;
+  const { slug = '', area = '' } = req.params;
 
   try {
     const cleanedArea = area.toLowerCase().trim().replace(/\s+/g, '-');
-    const cleanedCategory = category.toLowerCase().trim().replace(/\s+/g, '-');
 
     const query = `
       SELECT * FROM hospitals 
       WHERE slug = ?
         AND REPLACE(LOWER(TRIM(area)), ' ', '-') = ?
-        AND REPLACE(LOWER(TRIM(category)), ' ', '-') = ?
       LIMIT 1
     `;
 
-    const [rows] = await db.execute(query, [slug, cleanedArea, cleanedCategory]);
+    const [rows] = await db.execute(query, [slug, cleanedArea]);
 
     if (rows.length === 0) {
-      console.warn('Hospital not found for:', { slug, cleanedArea, cleanedCategory });
+      console.warn('Hospital not found for:', { slug, cleanedArea });
       return res.status(404).json({ message: 'Hospital not found' });
     }
 

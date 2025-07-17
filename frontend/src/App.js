@@ -65,7 +65,7 @@ function App() {
         {/* Hospital - ✅ Correct Route */}
         <Route path="/hospitals/add" element={<ProtectedRoute><AddHospital /></ProtectedRoute>} />
         <Route path="/hospitals/list" element={<HospitalList />} />
-        <Route path="/hospitals/:area/:category/:slug" element={<HospitalDetails />} />
+        <Route path="/hospitals/:area/:slug" element={<HospitalDetails />} />
          <Route path="/hospitals/edit/:id" element={<ProtectedRoute><HospitalEdit /></ProtectedRoute>} />
          
         

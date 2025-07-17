@@ -32,7 +32,7 @@ const ResetPassword = () => {
 
     setLoading(true);
     try {
-      const res = await axios.post(`${API}/api/user/reset-password/${token}`, { password });
+      const res = await axios.post(`${API}/api/auth/user/reset-password/${token}`, { password });
       toast.success(res.data.message || 'Password reset successfully!');
       setTimeout(() => navigate('/user/login'), 2000);
     } catch (err) {

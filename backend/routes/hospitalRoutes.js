@@ -27,7 +27,7 @@ router.get('/myhospitals', authenticateJWT, getHospitalsByUser);
 router.get('/latest', getLatestHospitals);
 
 // 🔗 SEO-friendly single hospital
-router.get('/:area/:category/:slug', getHospitalBySlug);
+router.get('/:area/:slug', getHospitalBySlug);
 
 // 🔄 Edit hospital
 router.get('/:id', getHospitalById);

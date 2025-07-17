@@ -54,7 +54,7 @@ const Register = () => {
         password: formData.password,
       };
 
-      const response = await axios.post(`${API}/api/user/register`, payload);
+      const response = await axios.post(`${API}/api/auth/register`, payload);
       setLoading(false);
       toast.success(response.data.message || 'Successfully registered!');
       

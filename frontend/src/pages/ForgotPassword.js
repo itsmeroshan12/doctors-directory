@@ -18,7 +18,7 @@ const ForgotPassword = () => {
 
     setLoading(true);
     try {
-      const res = await axios.post(`${API}/api/user/forgot-password`, { email });
+      const res = await axios.post(`${API}/api/auth/user/forgot-password`, { email });
       toast.success(res.data.message || 'Check your email for reset link!');
       setEmail('');
     } catch (err) {

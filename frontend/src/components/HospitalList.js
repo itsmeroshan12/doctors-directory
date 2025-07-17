@@ -181,7 +181,7 @@ const HospitalList = () => {
                     <button
                       className="btn btn-sm btn-outline-primary shadow-sm rounded-pill custom-mobile-btn"
                       onClick={() =>
-                        window.location.href = `/hospitals/${slugify(hospital.area)}/${slugify(hospital.category)}/${hospital.slug}`
+                        window.location.href = `/hospitals/${slugify(hospital.area)}/${hospital.slug}`
                       }
                     >
                       View More
