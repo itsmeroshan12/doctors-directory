@@ -85,12 +85,21 @@ const ClinicEdit = () => {
     e.preventDefault();
 
     const data = new FormData();
+
+    // Append all text fields
     for (let key in formData) {
-      if (formData[key] !== null && formData[key] !== undefined) {
+      if (
+        key !== "clinicImage" &&
+        key !== "doctorImage" &&
+        key !== "otherImage" &&
+        formData[key] !== null &&
+        formData[key] !== undefined
+      ) {
         data.append(key, formData[key]);
       }
     }
 
+    // Append images ONLY if selected
     if (clinicImageRef.current?.files[0]) {
       data.append("clinicImage", clinicImageRef.current.files[0]);
     }
@@ -110,8 +119,10 @@ const ClinicEdit = () => {
       setTimeout(() => navigate("/user/items"), 2000);
     } catch (err) {
       toast.error("Update failed");
+      console.error("❌ Update error:", err.response || err);
     }
   };
+
 
   return (
     <>

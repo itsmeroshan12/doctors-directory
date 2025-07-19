@@ -155,6 +155,10 @@ const AddListing = () => {
             freeSolo
             options={categories}
             value={formData.category}
+            inputValue={formData.category}
+            onInputChange={(e, newInputValue) =>
+              setFormData((prev) => ({ ...prev, category: newInputValue }))
+            }
             onChange={(e, newValue) =>
               setFormData((prev) => ({ ...prev, category: newValue || "" }))
             }
@@ -166,8 +170,6 @@ const AddListing = () => {
                 required
                 onChange={(e) => {
                   const value = e.target.value;
-
-                  // ✅ Check for multiple words
                   if (/\s/.test(value.trim())) {
                     const suggested = value.trim().toLowerCase().replace(/\s+/g, '-');
                     toast.info(`Use "${suggested}" instead of spaces`, {
@@ -175,8 +177,6 @@ const AddListing = () => {
                       autoClose: 3000,
                     });
                   }
-
-                  setFormData((prev) => ({ ...prev, category: value }));
                 }}
               />
             )}

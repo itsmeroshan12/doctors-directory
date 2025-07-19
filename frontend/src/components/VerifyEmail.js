@@ -28,7 +28,10 @@ const VerifyEmail = () => {
         setMessage(msg);
 
         // Treat "already verified" as success
-        if (msg.toLowerCase().includes('already verified')) {
+        if (
+          msg.toLowerCase().includes('successfully verified') ||
+          msg.toLowerCase().includes('email verified successfully')
+        ) {
           setError(false);
         }
 

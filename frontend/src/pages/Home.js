@@ -52,9 +52,15 @@ const Home = () => {
   }, [API]);
 
   const getListingUrl = (item) => {
-    const area = slugify(item.area || '');
-    const category = slugify(item.category || item.type || '');
-    const slug = item.slug;
+    const area = slugify(item.area || 'unknown');
+    const slug = item.slug || 'no-slug';
+
+    if (item.type === 'hospital') {
+      // No category in hospital route
+      return `/hospitals/${area}/${slug}`;
+    }
+
+    const category = slugify(item.category || item.type || 'general');
     return `/${item.type}s/${area}/${category}/${slug}`;
   };
 
