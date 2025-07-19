@@ -12,12 +12,12 @@ const doctorRoutes = require('./routes/doctorRoutes');
 const clinicRoutes = require('./routes/clinicRoutes');
 const hospitalRoutes = require('./routes/hospitalRoutes');
 const searchRoutes = require('./routes/searchRoutes');
-
+const FRONTEND_URL = process.env.FRONTEND_URL;
 const app = express();
 
 // ✅ Middleware
 app.use(cors({
-  origin: 'http://13.232.11.181:3000',
+  origin: FRONTEND_URL,
   credentials: true,
 }));
 app.use(express.json());

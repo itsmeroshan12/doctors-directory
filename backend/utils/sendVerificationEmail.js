@@ -14,7 +14,9 @@ const sendVerificationEmail = async (email, token) => {
       debug: true,
     });
 
+    // const verificationUrl = `${process.env.FRONTEND_URL}/api/user/verify-email?token=${token}`;
     const verificationUrl = `${process.env.FRONTEND_URL}/verify-email?token=${token}`;
+
 
     const mailOptions = {
       from: `"Doctor Directory" <${process.env.EMAIL_USER}>`,

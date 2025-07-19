@@ -1,8 +1,16 @@
 const db = require('../config/db');
 
 // Helper to generate a URL-friendly slug
-const generateSlug = (name) =>
-  name.toLowerCase().replace(/\s+/g, '-').replace(/[^\w\-]+/g, '') + '-' + Date.now();
+const generateSlug = (name) => {
+  const cleanName = name.trim(); // remove trailing spaces
+  const slugBase = cleanName
+    .toLowerCase()
+    .replace(/[^\w\s-]/g, '')         // remove all non-word characters except spaces and dashes
+    .replace(/\s+/g, '-')             // replace spaces with single dash
+    .replace(/-+/g, '-');             // replace multiple dashes with single dash
+  return `${slugBase}-${Date.now()}`;
+};
+
 
 // ✅ Create a new hospital
 exports.createHospital = async (req, res) => {
@@ -103,6 +111,7 @@ exports.getHospitalBySlug = async (req, res) => {
   }
 };
 
+
 // ✅ Get hospitals added by the logged-in user
 exports.getHospitalsByUser = async (req, res) => {
   const userId = req.user?.userId;
@@ -192,16 +201,22 @@ exports.getHospitalById = async (req, res) => {
 exports.updateHospital = async (req, res) => {
   try {
     const { id } = req.params;
+    const {
+      name,
+      area,
+      category,
+      type,
+      description,
+      address,
+      mobile,
+      email,
+      website,
+    } = req.body;
 
-    // Multer will give you form fields in req.body
-    const { name, area, category, type, description, address, mobile, email, website } = req.body;
-
-    // Handle uploaded files (if any)
     const hospitalImage = req.files?.hospitalImage?.[0]?.filename || null;
     const otherImage = req.files?.otherImage?.[0]?.filename || null;
 
-    // Fetch existing data to preserve unchanged images
-    const [existingRows] = await db.execute("SELECT hospitalImage, otherImage FROM hospitals WHERE id = ?", [id]);
+    const [existingRows] = await db.execute("SELECT * FROM hospitals WHERE id = ?", [id]);
     if (existingRows.length === 0) {
       return res.status(404).json({ message: "Hospital not found" });
     }
@@ -211,10 +226,14 @@ exports.updateHospital = async (req, res) => {
     const finalHospitalImage = hospitalImage || existing.hospitalImage;
     const finalOtherImage = otherImage || existing.otherImage;
 
-    // Run the update
+    let slug = existing.slug;
+    if (name && name !== existing.name) {
+      slug = generateSlug(name);
+    }
+
     await db.execute(
       `UPDATE hospitals 
-       SET name = ?, area = ?, category = ?, type = ?, description = ?, address = ?, mobile = ?, email = ?, website = ?, hospitalImage = ?, otherImage = ?
+       SET name = ?, area = ?, category = ?, type = ?, description = ?, address = ?, mobile = ?, email = ?, website = ?, hospitalImage = ?, otherImage = ?, slug = ?
        WHERE id = ?`,
       [
         name,
@@ -228,6 +247,7 @@ exports.updateHospital = async (req, res) => {
         website,
         finalHospitalImage,
         finalOtherImage,
+        slug,
         id,
       ]
     );
@@ -240,7 +260,9 @@ exports.updateHospital = async (req, res) => {
 };
 
 
-// Get latest hospitals
+
+
+
 // Get latest hospitals
 exports.getLatestHospitals = async (req, res) => {
   try {
@@ -268,11 +290,5 @@ exports.getLatestHospitals = async (req, res) => {
     res.status(500).json({ error: "Failed to fetch latest hospitals" });
   }
 };
-
-
-
-
-
-
 
 

@@ -208,6 +208,8 @@ exports.getDoctorById = async (req, res) => {
 
 
 // PUT update doctor
+const slugify = require("slugify");
+
 exports.updateDoctor = async (req, res) => {
   try {
     const { id } = req.params;
@@ -226,16 +228,15 @@ exports.updateDoctor = async (req, res) => {
       email,
     } = req.body;
 
-    const safe = (value) => (value === undefined ? null : value); // ✅ helper
+    const safe = (value) => (value === undefined ? null : value);
 
-    // Uploaded images (if any)
     const doctorImage = req.files?.doctorImage?.[0]?.filename || null;
     const clinicImage = req.files?.clinicImage?.[0]?.filename || null;
     const otherImage = req.files?.otherImage?.[0]?.filename || null;
 
-    // Fetch existing images
+    // Fetch current doctor record
     const [existingRows] = await db.execute(
-      "SELECT doctorImage, clinicImage, otherImage FROM doctors WHERE id = ?",
+      "SELECT name, doctorImage, clinicImage, otherImage FROM doctors WHERE id = ?",
       [id]
     );
 
@@ -249,31 +250,58 @@ exports.updateDoctor = async (req, res) => {
     const finalClinicImage = clinicImage || existing.clinicImage;
     const finalOtherImage = otherImage || existing.otherImage;
 
-    await db.execute(
-      `UPDATE doctors SET 
+    let slug = existing.slug;
+
+    // If name changed, regenerate slug
+    if (name && name !== existing.name) {
+      const baseSlug = slugify(name, { lower: true, strict: true });
+
+      // Check for existing slugs
+      const [slugCheck] = await db.execute(
+        "SELECT COUNT(*) AS count FROM doctors WHERE slug = ? AND id != ?",
+        [baseSlug, id]
+      );
+
+      if (slugCheck[0].count === 0) {
+        slug = baseSlug;
+      } else {
+        // Try slug-1, slug-2, ... until unique
+        let suffix = 1;
+        let newSlug = `${baseSlug}-${suffix}`;
+        let [conflict] = await db.execute(
+          "SELECT COUNT(*) AS count FROM doctors WHERE slug = ? AND id != ?",
+          [newSlug, id]
+        );
+
+        while (conflict[0].count > 0) {
+          suffix++;
+          newSlug = `${baseSlug}-${suffix}`;
+          [conflict] = await db.execute(
+            "SELECT COUNT(*) AS count FROM doctors WHERE slug = ? AND id != ?",
+            [newSlug, id]
+          );
+        }
+
+        slug = newSlug;
+      }
+    }
+
+    const sql = `
+      UPDATE doctors SET
         name = ?, area = ?, category = ?, specialization = ?, experienceYears = ?, type = ?,
         qualifications = ?, languagesSpoken = ?, address = ?, description = ?, 
-        mobile = ?, email = ?, doctorImage = ?, clinicImage = ?, otherImage = ?
-       WHERE id = ?`,
-      [
-        safe(name),
-        safe(area),
-        safe(category),
-        safe(specialization),
-        safe(experienceYears),
-        safe(type),
-        safe(qualifications),
-        safe(languagesSpoken),
-        safe(address),
-        safe(description),
-        safe(mobile),
-        safe(email),
-        safe(finalDoctorImage),
-        safe(finalClinicImage),
-        safe(finalOtherImage),
-        id,
-      ]
-    );
+        mobile = ?, email = ?, doctorImage = ?, clinicImage = ?, otherImage = ?, slug = ?
+      WHERE id = ?
+    `;
+
+    const updateValues = [
+      safe(name), safe(area), safe(category), safe(specialization), safe(experienceYears), safe(type),
+      safe(qualifications), safe(languagesSpoken), safe(address), safe(description),
+      safe(mobile), safe(email), safe(finalDoctorImage), safe(finalClinicImage), safe(finalOtherImage),
+      safe(slug), id
+    ];
+
+    await db.execute(sql, updateValues);
 
     res.json({ message: "Doctor updated successfully" });
   } catch (err) {
@@ -281,6 +309,8 @@ exports.updateDoctor = async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
+
+
 
 
 // listing for the homepage 

@@ -5,6 +5,7 @@ const generateSlug = (name) =>
   name.toLowerCase().replace(/\s+/g, '-').replace(/[^\w\-]+/g, '') + '-' + Date.now();
 
 // Create a new clinic
+
 exports.createClinic = async (req, res) => {
   try {
     console.log('🆕 Creating Clinic for user:', req.user?.userId);
@@ -28,11 +29,15 @@ exports.createClinic = async (req, res) => {
 
     const user_id = req.user?.userId || null;
 
+    // Required fields check
     if (!name || !type || !area) {
       return res.status(400).json({ message: 'Name, type, and area are required' });
     }
 
+    // Generate SEO-friendly unique slug
     const slug = generateSlug(name);
+
+    // Handle file uploads
     const clinicImage = req.files?.clinicImage?.[0]?.filename || null;
     const doctorImage = req.files?.doctorImage?.[0]?.filename || null;
     const otherImage = req.files?.otherImage?.[0]?.filename || null;
@@ -63,13 +68,17 @@ exports.createClinic = async (req, res) => {
       user_id,
     ];
 
+    console.log("✅ Values count:", values.length);
+    console.log("Uploaded files:", req.files);
+
     const [result] = await db.execute(
       `INSERT INTO clinics 
       (name, doctorName, qualifications, mobile, email, address, website, experience, specialization, area, category, description, type, clinicImage, doctorImage, otherImage, slug, createdAt, updatedAt, user_id) 
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
       values
     );
 
+    // Response
     res.status(201).json({
       id: result.insertId,
       name,
@@ -245,14 +254,18 @@ exports.updateClinic = async (req, res) => {
     const finalDoctorImage = doctorImage || existing.doctorImage;
     const finalOtherImage = otherImage || existing.otherImage;
 
+    // ✅ Generate a new slug based on updated name
+    const slug = generateSlug(name);
+
     await db.execute(
       `UPDATE clinics SET
-        name = ?, doctorName = ?, qualifications = ?, mobile = ?, email = ?, address = ?, website = ?,
+        name = ?, slug = ?, doctorName = ?, qualifications = ?, mobile = ?, email = ?, address = ?, website = ?,
         experience = ?, specialization = ?, area = ?, category = ?, description = ?, type = ?,
         clinicImage = ?, doctorImage = ?, otherImage = ?
       WHERE id = ?`,
       [
         name,
+        slug,
         doctorName,
         qualifications,
         mobile,
@@ -272,7 +285,7 @@ exports.updateClinic = async (req, res) => {
       ]
     );
 
-    res.json({ message: "Clinic updated successfully" });
+    res.json({ message: "Clinic updated successfully", slug });
   } catch (err) {
     console.error("Error updating clinic:", err);
     res.status(500).json({ message: "Internal server error" });
